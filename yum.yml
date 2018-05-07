@@ -1,0 +1,28 @@
+  - name: Install Dependencies
+    yum:
+      name: "{{ item }}"
+      state: latest
+    with_items: 
+         - nfs-utils
+        # - git
+         - python
+         - python-pip
+        # - python-wheel
+        # - openssl
+         - epel-release
+         - ansible
+
+  - name: Python Pip
+    pip:
+      name: requests
+      state: latest
+
+
+
+   # notify: "restart if changed"
+   #
+   #
+   #handlers:
+   #   - name: Restart NFS-Utils
+   #     service: name=nfs-utils state=restarted
+   #     listen: "restart if changed"

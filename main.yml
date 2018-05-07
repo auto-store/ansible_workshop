@@ -1,0 +1,11 @@
+## playbook to set up workshop environment 
+
+- hosts: 10.67.8.216
+  become: yes
+  become_method: sudo 
+  gather_facts: no
+  tasks: 
+     - include_tasks: yum.yml
+     - include_tasks: users-groups.yml
+     - include_tasks: move_files.yml
+    

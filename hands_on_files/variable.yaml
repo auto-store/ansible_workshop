@@ -1,0 +1,7 @@
+SLM_host: xxx.xxx.xxx.xxx.xxx
+SLM_user: xxxx
+SLM_password: xxxx
+SLM_Tier: xxxx
+SVM_name: xxx
+Volume_name: xxxx
+NFS_LIF: xxxxx

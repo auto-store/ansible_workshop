@@ -1,0 +1,34 @@
+- name: Creates Playbook Directory
+  file: path=/etc/ansible/playbooks state=directory
+
+- name: Create Modules Dir
+  file: path=/root/modules state=directory
+
+- name: Copy Modules
+  copy:
+     src: /root/modules
+     dest: /root/
+
+#- name: Copy Ansible.cfg
+#  copy: 
+#     src: /etc/ansible/ansible.cfg
+#     dest: /etc/ansible/ansible.cfg
+       
+- name: Creates directory
+  file: path=/etc/ansible/playbooks/nfs state=directory
+
+- name: Copy Hosts File 
+  copy:
+    src: /etc/ansible/hosts
+    dest: /etc/ansible/hosts
+
+- name: Copy Playbooks
+  copy:
+    src: /etc/ansible/playbooks/hands_on_ansible/hands_on_files/mount_nfs.yml
+    dest: /etc/ansible/playbooks/
+
+- name: Copy Vars
+  copy: 
+    src: /etc/ansible/playbooks/hands_on_ansible/hands_on_files/variable.yaml
+    dest: /etc/ansible/playbooks/
+
