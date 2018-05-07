@@ -20,6 +20,8 @@ INSTRUCTIONS for DEPLOYING USER ENVIRONMENT:
 
 3. To deploy, in the working directory, run "ansible-playbook main.yml"
 
+(Ansible is required on the host executing the playbook. The correct modules must be present on the host in /root/modules)
+
 ########################
 
 *** when accessing users, currently need to define password as the root user via the terminal. Needs passwords defined in playbook *** 
