@@ -22,6 +22,6 @@ INSTRUCTIONS for DEPLOYING USER ENVIRONMENT:
 
 (Ansible is required on the host executing the playbook. The correct modules must be present on the host in /root/modules)
 
-########################
+#############
 
-*** when accessing users, currently need to define password as the root user via the terminal. Needs passwords defined in playbook *** 
+* Currently need to define passwords for users as the root user via the terminal. Needs passwords defined in playbook * 
