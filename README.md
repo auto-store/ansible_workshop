@@ -1,9 +1,14 @@
 # ansible_workshop
 
 #########################
-This deploys the environment: creates users, creates groups, updates and installs packages. Pushes configuration files and modules. 
+This deploys the environment: 
+-creates users 
+- creates groups
+- updates and installs packages. 
+- Pushes configuration files and modules. 
 
 #########################
+
 INSTRUCTIONS for DEPLYING USER ENVIRONMENT:
 
 1. Clone this repo!
@@ -15,3 +20,5 @@ INSTRUCTIONS for DEPLYING USER ENVIRONMENT:
 3. To deploy, in the working directory, run "ansible-playbook main.yml"
 
 ########################
+
+when accessing users, currently need to define password as the root user via the terminal. Needs passwords defined in playbook. 
