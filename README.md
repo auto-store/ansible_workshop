@@ -22,4 +22,4 @@ INSTRUCTIONS for DEPLOYING USER ENVIRONMENT:
 
 ########################
 
-when accessing users, currently need to define password as the root user via the terminal. Needs passwords defined in playbook. 
+*** when accessing users, currently need to define password as the root user via the terminal. Needs passwords defined in playbook *** 
