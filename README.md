@@ -16,7 +16,7 @@ INSTRUCTIONS for DEPLOYING USER ENVIRONMENT:
 
 2. Edit "vars.yml" to define users and groups
 
-3. Edit main.yml with an IP Address of your target host 
+3. Edit "main.yml" with an IP Address of your target host 
 
 3. To deploy, in the working directory, run "ansible-playbook main.yml"
 
@@ -24,4 +24,4 @@ INSTRUCTIONS for DEPLOYING USER ENVIRONMENT:
 
 #############
 
-* Currently need to define passwords for users as the root user via the terminal. Needs passwords defined in playbook * 
+** Currently need to define passwords for users as the root user via the terminal. Needs passwords defined in playbook ** 
