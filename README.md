@@ -1,15 +1,16 @@
 # ansible_workshop
 
 #########################
+
 This deploys the environment: 
--creates users 
+- creates users 
 - creates groups
 - updates and installs packages. 
 - Pushes configuration files and modules. 
 
 #########################
 
-INSTRUCTIONS for DEPLYING USER ENVIRONMENT:
+INSTRUCTIONS for DEPLOYING USER ENVIRONMENT:
 
 1. Clone this repo!
 
