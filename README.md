@@ -2,7 +2,7 @@
 
 #########################
 
-This deploys the environment: 
+This repo deploys a workshop environment: 
 - creates users 
 - creates groups
 - updates and installs packages. 
