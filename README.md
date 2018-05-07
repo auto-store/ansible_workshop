@@ -1,10 +1,10 @@
 # ansible_workshop
 
-##################################################################################################################################
+#########################
 This deploys the environment: creates users, creates groups, updates and installs packages. Pushes configuration files and modules. 
 
-##################################################################################################################################
-INSTRUCTIONS for Deploying the Environment:
+#########################
+INSTRUCTIONS for DEPLYING USER ENVIRONMENT:
 
 1. Clone this repo!
 
@@ -14,4 +14,4 @@ INSTRUCTIONS for Deploying the Environment:
 
 3. To deploy, in the working directory, run "ansible-playbook main.yml"
 
-###################################################################################################################################
+########################
