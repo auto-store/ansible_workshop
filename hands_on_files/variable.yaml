@@ -1,0 +1,7 @@
+SLM_host: 10.67.10.191
+SLM_user: Automation
+SLM_password: Ansible1!
+SLM_Tier: Performance
+SVM_name: WorkShop_Automation
+Volume_name: Pablo_Escobar
+NFS_LIF: 10.67.12.19

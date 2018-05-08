@@ -1,0 +1,147 @@
+- hosts: localhost
+  tasks:
+    - name: Getting the Variables from variable.yaml
+      include_vars:
+          file: variable.yaml
+          name: variable
+     
+    - name: print Variables
+      vars:
+          msg: | 
+              SLM host: {{ variable.get('SLM_host') }}
+              SLM user: {{ variable.get('SLM_user') }}
+              SLM password: {{ variable.get('SLM_password') }}
+              SVM Name: {{ variable.get('SVM_name') }}
+              SLM_Tier: {{ variable.get('SLM_Tier') }}
+              Volume_name: {{ variable.get('Volume_name') }}
+              NFS LIF: {{ variable.get('NFS_LIF') }}
+      debug: 
+          msg: "{{ msg.split('\n') }}" 
+              
+    - name: Get all Storage VMs
+      StorageVMModule: 
+                host={{ variable.get('SLM_host') }}
+                port=8443 
+                user={{ variable.get('SLM_user') }}
+                password={{ variable.get('SLM_password') }} 
+                action=get 
+                name={{ variable.get('SVM_name') }}
+      register: jsonResultforSVMs
+
+    - name: print the SVM key
+      debug: msg="{{ jsonResultforSVMs.meta.result.records[0].key}}"
+      
+    - name: Get all Storage Service Levels
+      StorageServiceLevelModule: 
+                host={{ variable.get('SLM_host') }}
+                port=8443 
+                user={{ variable.get('SLM_user') }}
+                password={{ variable.get('SLM_password') }}
+                action=get 
+                name={{ variable.get('SLM_Tier') }}
+      register: jsonResultforSSLs
+
+    - name: print the SSL key
+      debug: msg="{{ jsonResultforSSLs.meta.result.records[0].key}}"
+
+    - name: Provision File Share
+      FileShareModule:
+                host={{ variable.get('SLM_host') }}
+                port=8443
+                user={{ variable.get('SLM_user') }}
+                password={{ variable.get('SLM_password') }}
+                action=post
+                name={{ variable.get('Volume_name') }}
+                size=204803008
+                storage_vm_key="{{ jsonResultforSVMs.meta.result.records[0].key}}"
+                storage_service_level_key="{{ jsonResultforSSLs.meta.result.records[0].key}}"
+      register : jsonResult
+
+    - name: print the job key
+      debug : msg="{{ jsonResult.meta.result.records[0].key}}"
+
+    - name: loop for status
+      JobScheduleModule: 
+                host={{ variable.get('SLM_host') }}
+                port=8443 
+                user={{ variable.get('SLM_user') }} 
+                password={{ variable.get('SLM_password') }} 
+                action=get 
+                key={{ jsonResult.meta.result.records[0].key}}
+      register : jsonResult
+      until:  (jsonResult.meta.result.records[0].status == "COMPLETED") or (jsonResult.meta.result.records[0].status == "FAILED")
+      retries: 5
+      delay: 10
+
+    - name: Find Provisioned File Share Key
+      FileShareModule:
+                host={{ variable.get('SLM_host') }}
+                port=8443
+                user={{ variable.get('SLM_user') }} 
+                password={{ variable.get('SLM_password') }}
+                action=get
+                name={{ variable.get('Volume_name') }}
+      register : jsonResultforFileShare
+
+
+    - name: print the file share key
+      debug: msg="{{ jsonResultforFileShare.meta.result.records[0].key}}"
+
+    - name: Find Export Policy
+      ExportPolicyModule:
+                host={{ variable.get('SLM_host') }}
+                port=8443
+                user={{ variable.get('SLM_user') }} 
+                password={{ variable.get('SLM_password') }}
+                action=get
+                name=ansibleExportPolicy
+      register : jsonResultforExportPolicy
+
+    - name: print the export policy key
+      debug: msg="{{ jsonResultforExportPolicy.meta.result.records[0].key}}"
+
+    - name: Provision NFS Share
+      NFSShareModule:
+                host={{ variable.get('SLM_host') }}
+                port=8443
+                user={{ variable.get('SLM_user') }} 
+                password={{ variable.get('SLM_password') }}
+                action=post
+                export_policy_key="{{ jsonResultforExportPolicy.meta.result.records[0].key}}"
+                file_share_key="{{ jsonResultforFileShare.meta.result.records[0].key}}"
+      register : jsonResult
+
+    - name: print the job key
+      debug : msg="{{ jsonResult.meta.result.records[0].key}}"
+
+    - name: loop for status
+      JobScheduleModule: 
+                 host={{ variable.get('SLM_host') }} 
+                 port=8443 
+                 user={{ variable.get('SLM_user') }}
+                 password={{ variable.get('SLM_password') }}
+                 action=get key={{ jsonResult.meta.result.records[0].key}}
+      register : jsonResult
+      until:  (jsonResult.meta.result.records[0].status == "COMPLETED") or (jsonResult.meta.result.records[0].status == "FAILED")
+      retries: 5
+      delay: 10
+
+    - name: start nfs service
+      command: service nfs start
+    
+    - name: Create directory NFS_DIR_{{ variable.get('Volume_name') }}
+      file:
+        path: ./NFS_DIR_{{ variable.get('Volume_name') }}
+        state: directory
+        owner: "{{ variable.get('SLM_user') }}"
+        group: "{{ variable.get('SLM_user') }}"
+        mode: 0775
+    
+#    - name: modifying the /etc/fstab
+#      lineinfile:
+#        dest: "/etc/fstab"
+#        state: present
+#        line: "{{ variable.get('NFS_LIF') }}:/{{ variable.get('Volume_name') }} /home/{{ variable.get('SLM_user') }}/NFS_DIR_{{ variable.get('Volume_name') }} user,owner 1 1"
+        
+    - name: mount the nfs share
+      command: "mount -t nfs {{ variable.get('NFS_LIF') }}:/{{ variable.get('Volume_name') }} ./NFS_DIR_{{ variable.get('Volume_name') }} -o nfsvers=3"
