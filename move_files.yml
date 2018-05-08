@@ -14,13 +14,12 @@
 #     src: /etc/ansible/ansible.cfg
 #     dest: /etc/ansible/ansible.cfg
        
-<<<<<<< HEAD
+
 #- name: Creates directory
+#   file: path=/etc/ansible/playbooks/nfs state=directory
+# - name: Creates directory
 #  file: path=/etc/ansible/playbooks/nfs state=directory
-=======
-- name: Creates directory
-  file: path=/etc/ansible/playbooks/nfs state=directory
->>>>>>> 56c15858676dd2460ed3a5eaeb4dc67abda10c8d
+
 
 - name: Copy Hosts File 
   copy:
