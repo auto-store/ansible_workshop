@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 SLM_host: 10.67.10.191
 SLM_user: Automation
 SLM_password: Ansible1!
@@ -5,3 +6,12 @@ SLM_Tier: Performance
 SVM_name: WorkShop_Automation
 Volume_name: Pablo_Escobar
 NFS_LIF: 10.67.12.19
+=======
+SLM_host: xxx.xxx.xxx.xxx.xxx
+SLM_user: xxxx
+SLM_password: xxxx
+SLM_Tier: xxxx
+SVM_name: xxx
+Volume_name: xxxx
+NFS_LIF: xxxxx
+>>>>>>> 56c15858676dd2460ed3a5eaeb4dc67abda10c8d

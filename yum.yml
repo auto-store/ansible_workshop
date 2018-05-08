@@ -1,3 +1,4 @@
+<<<<<<< HEAD
   - name: install Epel-Release
     yum:
       name: epel-release
@@ -12,6 +13,21 @@
          - nfs-utils
          - ansible
          - python-pip 
+=======
+  - name: Install Dependencies
+    yum:
+      name: "{{ item }}"
+      state: latest
+    with_items: 
+         - nfs-utils
+        # - git
+         - python
+         - python-pip
+        # - python-wheel
+        # - openssl
+         - epel-release
+         - ansible
+>>>>>>> 56c15858676dd2460ed3a5eaeb4dc67abda10c8d
 
   - name: Python Pip
     pip:

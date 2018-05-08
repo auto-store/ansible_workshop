@@ -1,6 +1,10 @@
 ## playbook to set up workshop environment 
 
+<<<<<<< HEAD
 - hosts: 10.67.12.233
+=======
+- hosts: xxx.xxx.xxx.xxx.xxx
+>>>>>>> 56c15858676dd2460ed3a5eaeb4dc67abda10c8d
   become: yes
   become_method: sudo 
   gather_facts: no
